@@ -4,9 +4,7 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
 
-    before do
-      get :index
-    end
+    before { get :index }
 
     it 'populate an array of all questions' do
       expect(assigns(:questions)).to match_array(questions)
@@ -20,14 +18,43 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'GET #show' do
     let(:question) { create(:question) }
 
+    before { get :show, params: { id: question } }
+
     it 'assigns the request to @question' do
-      get :show, params: { id: question }
       expect(assigns(:question)).to eq question
     end
 
     it 'renders show view' do
-      get :show, params: { id: question }
       expect(response).to render_template :show
     end
   end
+
+  describe 'GET #new' do
+    before { get :new }
+
+    it 'assigns a new Question to @question' do
+      expect(assigns(:question)).to be_a_new(Question)
+    end
+
+    it 'renders new view' do
+      expect(response).to render_template :new
+    end
+  end
+
+  describe 'GET #edit' do
+    before { get :edit, id: question }
+
+    it 'assigns the requested question to @question' do
+      expect(assigns(:question)). to eq question
+    end
+
+    it 'renders edit viwe' do
+      expect(response).to render_template :edit
+    end
+
+    describe 'POST #create' do
+    end
+
+  end
+
 end
