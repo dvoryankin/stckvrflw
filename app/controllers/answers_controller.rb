@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :set_question, only: :create
+  before_action :set_question, only: [:create]
 
   def create
     @answer = @question.answers.new(answer_params)
@@ -8,6 +8,7 @@ class AnswersController < ApplicationController
       redirect_to @question
     else
       flash.now[:error] = 'Your answer is not created.'
+      render :new
     end
   end
 
