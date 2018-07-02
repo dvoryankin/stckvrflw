@@ -89,4 +89,55 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #update' do
+    context 'valid attributes' do
+      it 'assigns the requiested question to @question' do
+        patch :update, params: { id: question, question: attributes_for(:question) }
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'change question attributes' do
+        patch :update, params: { id: question, question: { title: 'updated title',
+                                                           body: 'updated body' } }
+        question.reload
+        expect(question.title).to eq 'updated title'
+        expect(question.body).to eq 'updated body'
+      end
+
+      it 'redirects to the update question' do
+        patch :update, params: { id: question, question: attributes_for(:question) }
+        expect(response).to redirect_to question
+      end
+    end
+
+    context 'invalid attributes' do
+      before do
+        patch :update, params: { id: question, question: { title: 'updated title', body: nil } }
+      end
+
+      it 'does not change question attributes' do
+        question.reload
+        expect(question.title).to eq 'MyString'
+        expect(question.body).to eq 'MyText'
+      end
+
+      it 're-renders edit view' do
+        expect(response).to render_template :edit
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    before { question }
+    it 'delete question' do
+      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+    end
+
+    it 'redirect to index view' do
+      delete :destroy, params: { id: question }
+      expect(response).to redirect_to question_path
+    end
+  end
 end
+
