@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :load_question, only: [:show, :edit, :update, :destroy]
 
   def index
     @questions = Question.all
@@ -39,7 +39,7 @@ class QuestionsController < ApplicationController
 
   private
 
-  def set_question
+  def load_question
     @question = Question.find(params[:id])
   end
 
