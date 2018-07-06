@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
+  root to: "questions#index"
+
   devise_for :users
 
   resources :questions do
-    resources :answers, shallow: true, only: [:new, :create]
+    resources :answers, only: [:new, :create]
   end
 
-  root to: "questions#index"
 end
