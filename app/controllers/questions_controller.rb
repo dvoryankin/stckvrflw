@@ -21,7 +21,7 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
     else
-      render :new#, notice: 'You have to confirm your email address before continuing.'
+      render :new
     end
   end
 
