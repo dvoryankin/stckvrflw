@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
-  before_action :load_question, only: [:show, :edit, :update, :destroy]
+  before_action :load_question, only: [ :show, :edit, :update, :destroy ]
+  before_action :authenticate_user!, except: [ :index, :show ]
 
   def index
     @questions = Question.all
@@ -20,7 +21,7 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
     else
-      render :new
+      render :new#, notice: 'You have to confirm your email address before continuing.'
     end
   end
 

@@ -7,6 +7,7 @@ feature 'Create question', %q{
 } do
 
   scenario 'Authenticated user creates question' do
+
     User.create!(email: 'user@test.com', password: '12345678')
 
     visit new_user_session_path # '/sign_in'
@@ -19,16 +20,15 @@ feature 'Create question', %q{
     fill_in 'Title', with: 'Test question'
     fill_in 'Body', with: 'text body'
     click_on 'Create'
-    save_and_open_page
 
     expect(page).to have_content 'Your question successfully created.'
   end
 
   scenario 'Non-authenticated user tries to create question' do
-    visit question_path
+    visit questions_path
     click_on 'Ask question'
+    # save_and_open_page
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
-
 end
