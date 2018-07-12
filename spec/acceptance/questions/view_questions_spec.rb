@@ -12,4 +12,8 @@ feature 'View questions', %q{
     expect(page).to have_content questions.first.title
     expect(page).to have_content questions.second.title
   end
+
+  scenario 'User view question and answers to it' do
+    question = create(:question)
+    answers = create_list(:answer, 2, question: question)
 end
