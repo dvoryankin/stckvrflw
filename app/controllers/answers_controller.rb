@@ -7,7 +7,7 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to @question, notice: 'Your answer successfully created.'
     else
-      flash.now[:error] = 'Your answer is not created.'
+      flash[:alert] = 'Not correct answer data'
       render 'questions/show'
     end
   end

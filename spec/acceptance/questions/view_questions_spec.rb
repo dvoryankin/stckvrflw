@@ -16,4 +16,5 @@ feature 'View questions', %q{
   scenario 'User view question and answers to it' do
     question = create(:question)
     answers = create_list(:answer, 2, question: question)
+  end
 end
