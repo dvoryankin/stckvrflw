@@ -17,6 +17,8 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
+    sign_in_user
+
     context 'with invalid attributes' do
       it 'does not save the answer' do
         expect { post :create, params: { answer: attributes_for(:invalid_answer),
