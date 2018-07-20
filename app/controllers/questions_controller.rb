@@ -17,11 +17,11 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.create(question_params)
+    @question = current_user.questions.new(question_params)
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
     else
-      render :new
+      flash[:alert] = 'Not the correct question data!'
     end
   end
 
@@ -34,8 +34,13 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
-    redirect_to question_path
+    if current_user.author?(@question)
+      @question.destroy
+      redirect_to question_path, notice: 'Question was successfully deleted'
+    else
+      redirect_to @question
+      flash[:alert] = 'Something wrong, try to delete your own question'
+    end
   end
 
   private
